@@ -1,0 +1,35 @@
+
+
+def sum(array)
+
+  array.reduce(0,:+)
+
+end
+
+raise 'sum([]) != 0' unless sum([]) == 0
+
+
+puts sum([])
+
+puts sum([1,1,1,100])
+
+arr = [10,31,1,100]
+
+def max_2_sum(array)
+
+  case array.length
+    when 0
+       return 0
+    when 1
+       return array[0]
+    else
+       array_sorted = array.sort
+       return array_sorted[array.length-2] + array_sorted[array.length-1]
+    end
+end
+
+
+ puts max_2_sum(arr)
+
+# print arr
+
