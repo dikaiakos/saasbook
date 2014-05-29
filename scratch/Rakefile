@@ -3,6 +3,6 @@
 task :default => :run
 
 task :run do
-  require './lib/book'
+  ruby '-Ilib', './lib/book.rb'
 end
 
