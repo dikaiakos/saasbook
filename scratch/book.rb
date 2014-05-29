@@ -17,7 +17,7 @@ puts "#{book.title} #{book.author}"
 
 
 
-s = "Hello: I`m a l33t programmer!!"
+s = "Hello: I am a l33t programmer!!"
 
 p s.split(/[^a-zA-Z]/).reject{|e| e == "I"}
 p s.scan(/[a-zA-Z]/).reject{|e| e == "I" || e.empty?}
