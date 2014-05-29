@@ -1,5 +1,5 @@
 Myrottenpotatoes::Application.routes.draw do
-  resource :movies
+  resources :movies
   root :to => redirect('/movies/')
 
   # The priority is based upon order of creation: first created -> highest priority.
