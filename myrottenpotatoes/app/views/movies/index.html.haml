@@ -8,13 +8,25 @@
       %th Rating
       %th Release Date
       %th More Info
+      %th Edit
+      %th Delete
   %tbody
     - @movies.each do |movie|
       %tr
         %td= movie.title 
         %td= movie.rating
         %td= movie.release_date
-        %td= link_to "More about #{movie.title}", movie_path(movie)
+        %td= link_to "More about #{movie.title}", movie_path(movie) 
+        %td= link_to 'Edit', edit_movie_path(movie)
+        %td= link_to 'Delete', movie_path(movie), method: :delete
 
 -# add to end of index.html.haml
 = link_to 'Add new movie', new_movie_path
+
+%h1 Search TMDb for a movie
+
+= form_tag action: 'search_tmdb' do
+
+  %label{for: 'search_terms'} Search Terms
+  = text_field_tag 'search_terms'
+  = submit_tag 'Search TMDb'
