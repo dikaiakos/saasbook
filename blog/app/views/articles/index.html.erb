@@ -5,7 +5,7 @@
 <table>
 <tr>
 
-<th>Title</th>
+<th><%= link_to 'Title', sort_title_path(@articles) %></th>
 <th>Text</th>
 </tr>
 
@@ -16,10 +16,11 @@
 
 <td><%= link_to 'Show', article_path(article) %></td>
 <td><%= link_to 'Edit', edit_article_path(article) %></td>
-<td><%= link_to 'Destroy', article_path(article), 
+<td><%= link_to 'Destroy', article_path(article),
                method: :delete, data: {confirm: 'Are you sure?' } %></td>
 </tr>
 
 
 <% end %>
 </table>
+

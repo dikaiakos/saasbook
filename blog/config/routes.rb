@@ -1,15 +1,13 @@
 Blog::Application.routes.draw do
+  resources :articles 
+  get '/articles/sort_title', :to => 'articles#sort_title'
 
-  resources :articles do
-    resources :comments
-  end
-  
-  root 'welcome#index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
