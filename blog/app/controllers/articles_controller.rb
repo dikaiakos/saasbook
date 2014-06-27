@@ -21,6 +21,15 @@ class ArticlesController < ApplicationController
     @article = Article.new
   end
 
+  def title
+    @articles = Article.all
+    debugger
+    @articles = @articles.sort_by { |m|
+      m.title
+    }
+    debugger
+    render 'index'
+  end
 
   def edit 
     @article = Article.find(params[:id])
@@ -35,17 +44,12 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def sort_title
-    @articles = Article.all
-    # sort by title
-    render 'index'
-  end
-
   def destroy
     @article = Article.find(params[:id])
     @article.destroy
     redirect_to articles_path
   end
+
 
 
   private

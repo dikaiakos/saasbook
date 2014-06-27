@@ -1,6 +1,6 @@
 Blog::Application.routes.draw do
+  get 'articles/title' => "articles#title"
   resources :articles 
-  get '/articles/sort_title', :to => 'articles#sort_title'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
