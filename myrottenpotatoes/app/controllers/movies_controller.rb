@@ -13,7 +13,6 @@ class MoviesController < ApplicationController
   end
 
   def create
-
     @movie = Movie.create!(movie_params)
     flash[:notice] = "#{@movie.title} was successfully created"
     redirect_to movies_path
@@ -41,6 +40,18 @@ class MoviesController < ApplicationController
     # hardwire to simulate failure
     flash[:warning] = "'#{params[:search_terms]}' was not found in TMDb."
     redirect_to movies_path
+  end
+
+  def by_title
+    @movies = Movie.order(title: :asc)
+    @title_style = 'hilite'
+    render 'index'
+  end
+
+  def by_release
+    @movies = Movie.order(release_date: :desc)
+    @release_style = 'hilite'
+    render 'index'
   end
 
   private

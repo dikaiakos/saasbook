@@ -23,7 +23,6 @@ class ArticlesController < ApplicationController
 
   def title
     @articles = Article.all
-    debugger
     @articles = @articles.sort_by { |m|
       m.title
     }
