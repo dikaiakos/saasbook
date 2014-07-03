@@ -1,7 +1,13 @@
 # This file is app/controllers/movies_controller.rb
 class MoviesController < ApplicationController
+
   def index
     @movies = Movie.all
+    @all_ratings = Movie.get_rating_values
+    if params.has_key?("ratings")
+      selected_ratings = params["ratings"].keys
+      @movies = Movie.where(rating: selected_ratings)
+    end
   end
 
   def show
@@ -44,12 +50,14 @@ class MoviesController < ApplicationController
 
   def by_title
     @movies = Movie.order(title: :asc)
+    @all_ratings = Movie.get_rating_values
     @title_style = 'hilite'
     render 'index'
   end
 
   def by_release
     @movies = Movie.order(release_date: :desc)
+    @all_ratings = Movie.get_rating_values
     @release_style = 'hilite'
     render 'index'
   end
