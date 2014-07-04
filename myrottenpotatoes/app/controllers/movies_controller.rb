@@ -1,12 +1,23 @@
 # This file is app/controllers/movies_controller.rb
 class MoviesController < ApplicationController
 
+  def initialize
+    super
+    @rating_selection = Hash.new(1) 
+    Movie.get_rating_values.each { |x| @rating_selection[x]   }
+  end
+
   def index
     @movies = Movie.all
-    @all_ratings = Movie.get_rating_values
     if params.has_key?("ratings")
-      selected_ratings = params["ratings"].keys
-      @movies = Movie.where(rating: selected_ratings)
+      @movies = Movie.where(rating: params["ratings"].keys)
+      @rating_selection.each_key { |key|
+        if params["ratings"].keys.include?(key)
+          @rating_selection[key] = 1
+        else
+          @rating_selection[key] = 0 
+        end
+        }
     end
   end
 
