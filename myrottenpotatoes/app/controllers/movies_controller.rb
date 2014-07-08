@@ -1,25 +1,37 @@
 # This file is app/controllers/movies_controller.rb
 class MoviesController < ApplicationController
 
-  def initialize
-    super
-    @rating_selection = Hash.new(1) 
-    Movie.get_rating_values.each { |x| @rating_selection[x]   }
-  end
 
   def index
-    @movies = Movie.all
-    if params.has_key?("ratings")
-      @movies = Movie.where(rating: params["ratings"].keys)
-      @rating_selection.each_key { |key|
-        if params["ratings"].keys.include?(key)
-          @rating_selection[key] = 1
-        else
-          @rating_selection[key] = 0 
-        end
-        }
+    debugger
+    if params[:commit] == 'Refresh' # triggered by clicking refersh button
+      if !params[:ratings].nil? 
+        @ratings = params[:ratings].keys
+        session[:ratings] = params[:ratings].keys
+      else # no rating parameter checked
+        @ratings = nil
+        session[:ratings] = nil
+      end
+    elsif params[:orderby].nil? # triggered by loading page
+      @ratings = Movie.rating_values
+      session[:ratings] = @ratings
+    else # triggered by clicking on table header links
+      @ratings = session[:ratings]
+    end
+
+    # need to figure out how to select and store at the same time
+    @movies = Movie.where(rating: @ratings)
+#    @movies = Movie.find(rating: @ratings, :order => "release_date desc")
+    if !params[:orderby].nil? && params[:orderby] == 'title'
+      @movies = Movie.where(rating: @ratings)
+    end
+    if !params[:orderby].nil? && params[:orderby] == 'release_date'
+      @movies = @movies.where(rating: @ratings)
     end
   end
+
+
+
 
   def show
     @movie = Movie.find(params[:id])
@@ -59,19 +71,7 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
-  def by_title
-    @movies = Movie.order(title: :asc)
-    @all_ratings = Movie.get_rating_values
-    @title_style = 'hilite'
-    render 'index'
-  end
 
-  def by_release
-    @movies = Movie.order(release_date: :desc)
-    @all_ratings = Movie.get_rating_values
-    @release_style = 'hilite'
-    render 'index'
-  end
 
   private
   def movie_params

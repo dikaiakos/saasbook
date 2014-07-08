@@ -1,6 +1,4 @@
 Myrottenpotatoes::Application.routes.draw do
-  get '/movies/by_title' 
-  get '/movies/by_release'
   resources :movies
 # Route that posts 'Search TMDb' form
   post '/movies/search_tmdb'
